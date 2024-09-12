@@ -1,13 +1,18 @@
 import CabinList from '@/components/CabinList';
 import { getCabins } from '@/lib/data-service';
 
-// Statically Generated (SSG)
-export async function getStaticProps() {
-  const cabins = await getCabins();
-  return { props: { cabins }, revalidate: 3600 };
+// Statically generated (SSG)
+export async function getServerSideProps() {
+  try {
+    const cabins = await getCabins();
+    return { props: { cabins } };
+  } catch (error) {
+    console.error('Error fetching cabins:', error);
+    return { props: { cabins: [] } };
+  }
 }
 
-export default function Cabins({ cabins }) {
+function Cabins({ cabins }) {
   return (
     <div>
       <h1 className='text-4xl mb-5 text-accent-400 font-medium'>Our Luxury Cabins</h1>
@@ -22,3 +27,5 @@ export default function Cabins({ cabins }) {
     </div>
   );
 }
+
+export default Cabins;

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import handler from './api/contact';
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
